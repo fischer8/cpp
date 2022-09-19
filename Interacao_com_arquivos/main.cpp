@@ -34,27 +34,17 @@ typedef struct codigos_transporte TipoCodTransporte;
 TAREFA 2
 ********************************************************************/
 
-void sequencial2(TipoEmpresas empresas[N_EMPRESAS], int input)
+int sequencial2(TipoEmpresas empresas[N_EMPRESAS], int input)
 {
-    int papel, metal, vidro, plastico;
+    int pos;
     for (int i = 0; i < 39; i++)
     {
         if (empresas[i].codEmpresa == input)
         {
-            metal = empresas[i].metal;
-            papel = empresas[i].papel;
-            vidro = empresas[i].vidro;
-            plastico = empresas[i].plastico;
-            cout << "\nA empresa " << input << " esta com " << metal << "%"
-                 << " da capacidade para metal";
-            cout << "\nA empresa " << input << " esta com " << papel << "%"
-                 << " da capacidade para papel";
-            cout << "\nA empresa " << input << " esta com " << plastico << "%"
-                 << " da capacidade para plastico";
-            cout << "\nA empresa " << input << " esta com " << vidro << "%"
-                 << " da capacidade para vidro\n\n";
+            pos = i;
         }
     }
+    return pos;
 }
 
 /******************************************************************************
@@ -62,7 +52,7 @@ TAREFA 3
 *******************************************************************************/
 
 void sequencial3(TipoEmpresas empresas[N_EMPRESAS])
-{
+{    cout << "\n\n\n\n" << endl;
     int cod;
     for (int i = 0; i < 38; i++)
     {
@@ -96,55 +86,56 @@ TAREFA 4
 void bubbleSort(TipoEmpresas empresas[N_EMPRESAS], int material)
 {
     int i, j;
-    if (material == 1)
-    {
-        for (i = 0; i < 38; i++)
-            for (j = 0; j < 37 - i; j++)
-                if (empresas[j].metal > empresas[j + 1].metal)
-                    swap(empresas[j + 1].metal,empresas[j].metal);
-        
-    }
-    if (material == 2)
-    {
-        for (i = 0; i < 38; i++)
-            for (j = 0; j < 37 - i; j++)
-                if (empresas[j].plastico > empresas[j + 1].plastico)
-                    swap(empresas[j + 1].plastico,empresas[j].plastico);
-        
-    }
-    if (material == 3)
-    {
-        for (i = 0; i < 38; i++)
-            for (j = 0; j < 37 - i; j++)
-                if (empresas[j].papel > empresas[j + 1].papel)
-                    swap(empresas[j + 1].papel,empresas[j].papel);
-        
-    }
-    if (material == 4)
-    {
-        for (i = 0; i < 38; i++)
-            for (j = 0; j < 37 - i; j++)
-                if (empresas[j].vidro > empresas[j + 1].vidro)
-                    swap(empresas[j + 1].vidro, empresas[j].vidro);
-        
-    }
-
-    int metal, papel, vidro, plastico,cod;
+    for (i = 37; i != 0; i--)
+        for (j = 37; j != 0; j--)
+            switch(material){
+            case 1:
+                if (empresas[j].metal > empresas[j - 1].metal){
+                    swap(empresas[j - 1],empresas[j]);
+                }
+                break;
+            case 2:
+                if (empresas[j].plastico > empresas[j - 1].plastico){
+                    swap(empresas[j - 1],empresas[j]);
+                }
+                break;
+            case 3:
+                if (empresas[j].papel > empresas[j - 1].papel) {
+                    swap(empresas[j - 1],empresas[j]);
+                }
+                break;
+            case 4:
+                if (empresas[j].vidro > empresas[j - 1].vidro){
+                    swap(empresas[j - 1],empresas[j]);
+                }
+                break;
+            default:
+                cout << "opcao invalida\n";
+                break;
+            }
     for (int i = 0; i < 5; i++)
     {
-        cod = empresas[i].codEmpresa;
-        metal = empresas[i].metal;
-        papel = empresas[i].papel;
-        vidro = empresas[i].vidro;
-        plastico = empresas[i].plastico;
-        cout << "\nA empresa " << cod << " esta com " << metal << "%"
-             << " da capacidade para metal";
-        cout << "\nA empresa " << cod << " esta com " << papel << "%"
-             << " da capacidade para papel";
-        cout << "\nA empresa " << cod << " esta com " << plastico << "%"
-             << " da capacidade para plastico";
-        cout << "\nA empresa " << cod << " esta com " << vidro << "%"
-             << " da capacidade para vidro\n\n";
+        switch(material){
+            case 1:
+                cout << "A empresa " << empresas[i].codEmpresa << " esta com "
+                << empresas[i].metal << "%" << " da capacidade para metal" << endl;
+                break;
+            case 2:
+                cout << "A empresa " << empresas[i].codEmpresa << " esta com "
+                << empresas[i].plastico << "%" << " da capacidade para plastico" << endl;
+                break;
+            case 3:
+                cout << "A empresa " << empresas[i].codEmpresa << " esta com "
+                << empresas[i].papel << "%" << " da capacidade para papel" << endl;
+                break;
+            case 4:
+                cout << "A empresa " << empresas[i].codEmpresa << " esta com "
+                << empresas[i].vidro << "%" << " da capacidade para vidro" << endl;
+                break;
+            default:
+                cout << "opcao invalida\n";
+                break;
+            }
     }
 }
 
@@ -211,11 +202,10 @@ int main()
 
             do
             {
-                int n = 0;
-                cout << "1) Analisar os estoques de uma determinada empresa (selecionada pelo c�digo).\n";
-                cout << "2) Apresentar os 5 registros com os maiores valores de porcentagem de ocupa��o de um tipo de res�duo.\n";
+                cout << "\n\n1) Analisar os estoques de uma determinada empresa (selecionada pelo codigo).\n";
+                cout << "2) Apresentar os 5 registros com os maiores valores de porcentagem de ocupacao de um tipo de residuo.\n";
                 cout << "3) Encerrar programa.\n";
-                cout << "\t Digite a op��o desejada: ";
+                cout << "\t Digite a opcao desejada: ";
                 cin >> resp;
                 cin.ignore();
                 switch (resp)
@@ -224,30 +214,36 @@ int main()
                     /******************************************************************************************
                      TAREFA 6
                     *******************************************************************************************/
-                    int input;
+                    int input, posicao;
                     cout << "\nInforme o codigo da empresa desejada ";
                     cin >> input;
-                    sequencial2(empresas, input);
-
-                    system("pause");
+                    cin.ignore();
+                    posicao = sequencial2(empresas, input);
+                    cout << "Codigo da região: " << empresas[posicao].codRegiao << endl;
+                    cout << "Quantidade de papel: " << empresas[posicao].papel << endl;
+                    cout << "Quatidade de metal: " << empresas[posicao].metal << endl;
+                    cout << "Quantidade de vidro: " << empresas[posicao].vidro << "\n";
+                    cout << "Quantidade de plastico: " << empresas[posicao].plastico << endl;
                     break;
                 case 2:
                     /******************************************************************************************
                      TAREFA 7
                     *******************************************************************************************/
                     int material;
-                    cout << "\n Deseja verificar qual material? \n1 para metal \n2 para plastico \n3 para papel \n4 para vidro";
-                    cin >> material;            
+                    cout <<"\n Deseja verificar qual material? \n1 para metal \n2 para plastico \n3 para papel \n4 para vidro" << endl;
+                    cin >> material;
+                    cout << "\n\n";
                     bubbleSort(empresas, material);
                     break;
                 case 3:
                     cout << "Encerrando o programa!\n\n";
                     break;
                 default:
-                    cout << "op��o inv�lida\n";
+                    cout << "opcao invalida\n";
                 }
             } while (resp != 3);
         }
     }
     return 0;
 }
+
